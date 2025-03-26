@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ToastContainer, Bounce } from "react-toastify";
 import NavBar from "../components/navbar";
-import VideoCard from "../components/VideoCard ";
+import VideoCard from "../components/videoCard ";
 import LoadingSpinner from "../components/loading";
 import axios from "axios";
 

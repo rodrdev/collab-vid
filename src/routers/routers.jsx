@@ -3,6 +3,8 @@ import Home from "../pages/Home";
 import Influencer from "../pages/influencer";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
+import EditUser from "../pages/Configs";
+import ForgotPassword from "../pages/ForgotPassword";
 const Routers = () => {
   return (
     <Router>
@@ -11,6 +13,8 @@ const Routers = () => {
         <Route path="/:id/:channelName" element={<Influencer />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/reset-password/:token" element={<ForgotPassword />} />
+        <Route path="/configuracoes" element={<EditUser />} />
       </Routes>
     </Router>
   );

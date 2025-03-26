@@ -1,6 +1,10 @@
 import { toast, Bounce } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { FiSettings } from "react-icons/fi";
+
 const NavBar = () => {
   const storedData = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
 
   const handleGenerateLink = () => {
     const currentUrl = window.location.origin;
@@ -20,22 +24,33 @@ const NavBar = () => {
       });
   };
 
+  const handleGoToSettings = () => {
+    navigate("/configuracoes");
+  };
+
+  const handleGoToHome = () => {
+    navigate("/");
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav className="navbar navbar-expand-lg navbar-light border border-gray-500">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          <img
-            src="../../public/logo.webp"
-            width="80"
-            className="rounded-circle"
-          />
-        </a>
-        <button
-          className="btn btn-primary"
-          onClick={() => handleGenerateLink(storedData.id)}
-        >
-          Gerar Link do Influenciador
-        </button>
+        <img src="../../public/logo.png" width="180" />
+        <div className="d-flex gap-2">
+          <button className="btn btn-primary" onClick={handleGoToHome}>
+            Home
+          </button>
+          <button className="btn btn-primary" onClick={handleGenerateLink}>
+            Gerar Link
+          </button>
+          <button
+            className="btn btn-secondary d-flex align-items-center gap-1"
+            onClick={handleGoToSettings}
+          >
+            <FiSettings size={18} />
+            Configurações
+          </button>
+        </div>
       </div>
     </nav>
   );

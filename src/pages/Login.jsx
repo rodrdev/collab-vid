@@ -9,6 +9,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({
@@ -39,6 +40,26 @@ const Login = () => {
       console.error("Erro ao fazer login:", err);
       setError("Erro ao fazer login");
       setLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!formData.email) {
+      toast.error(
+        "Por favor, preencha o campo de e-mail antes de redefinir a senha."
+      );
+      return;
+    }
+    try {
+      await axios.post("http://localhost:3000/users/forgot-password", {
+        email: formData.email,
+      });
+      toast.success(
+        "Se um e-mail estiver cadastrado, você receberá um link para redefinição de senha."
+      );
+    } catch (err) {
+      console.error("Erro ao solicitar redefinição de senha:", err);
+      toast.error("Erro ao solicitar redefinição de senha.");
     }
   };
 
@@ -82,6 +103,15 @@ const Login = () => {
                 required
               />
             </div>
+            <div className="mb-3 text-end">
+              <button
+                type="button"
+                className="btn btn-link p-0"
+                onClick={handleForgotPassword}
+              >
+                Esqueci minha senha
+              </button>
+            </div>
             {error && <div className="alert alert-danger">{error}</div>}
             <button
               type="submit"
@@ -91,6 +121,17 @@ const Login = () => {
               {loading ? "Entrando..." : "Entrar"}
             </button>
           </form>
+          <div className="text-center mt-3">
+            <p>
+              Não tem uma conta?{" "}
+              <button
+                className="btn btn-link p-0"
+                onClick={() => navigate("/register")}
+              >
+                Registre-se
+              </button>
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -3,17 +3,22 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
     isInfluencer: false,
     channelName: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const passwordsMatch = formData.password === formData.confirmPassword;
+
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
     setFormData({
@@ -27,6 +32,12 @@ const Register = () => {
     setError("");
     setLoading(true);
 
+    if (!passwordsMatch) {
+      setError("As senhas não coincidem.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:3000/users/register",
@@ -38,6 +49,7 @@ const Register = () => {
         name: "",
         email: "",
         password: "",
+        confirmPassword: "",
         isInfluencer: false,
         channelName: "",
       });
@@ -110,11 +122,33 @@ const Register = () => {
               </label>
               <input
                 type="password"
-                className="form-control"
+                className={`form-control ${
+                  !passwordsMatch && formData.confirmPassword
+                    ? "border-danger"
+                    : ""
+                }`}
                 id="password"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Senha"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="confirmPassword" className="form-label">
+                Confirme a Senha
+              </label>
+              <input
+                type="password"
+                className={`form-control ${
+                  !passwordsMatch && formData.confirmPassword
+                    ? "border-danger"
+                    : ""
+                }`}
+                id="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Confirme a senha"
                 required
               />
             </div>
@@ -134,7 +168,7 @@ const Register = () => {
             <button
               type="submit"
               className="btn btn-primary w-100"
-              disabled={loading}
+              disabled={loading || !passwordsMatch}
             >
               {loading ? "Cadastrando..." : "Criar Conta"}
             </button>
