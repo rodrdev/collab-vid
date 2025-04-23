@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
-import Influencer from "../pages/influencer";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import EditUser from "../pages/Configs";
 import ForgotPassword from "../pages/ForgotPassword";
+import Influencer from "../pages/influencer";
 const Routers = () => {
   return (
     <Router>
