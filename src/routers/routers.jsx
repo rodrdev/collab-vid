@@ -4,7 +4,7 @@ import Register from "../pages/Register";
 import Login from "../pages/Login";
 import EditUser from "../pages/Configs";
 import ForgotPassword from "../pages/ForgotPassword";
-import Influencer from "../pages/influencer";
+import Influencer from "../pages/Influencer";
 const Routers = () => {
   return (
     <Router>
