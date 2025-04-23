@@ -25,7 +25,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://collab-vid-back.onrender.com/login",
+        "https://collab-vid-back.onrender.com/users/login",
         formData
       );
       const { token, user } = response.data;
