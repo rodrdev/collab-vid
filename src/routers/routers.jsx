@@ -9,7 +9,8 @@ const Routers = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/:id/:channelName" element={<Influencer />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
