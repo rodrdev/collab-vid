@@ -29,7 +29,7 @@ const NavBar = () => {
   };
 
   const handleGoToHome = () => {
-    navigate("/");
+    navigate("/home");
   };
 
   return (

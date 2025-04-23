@@ -34,7 +34,7 @@ const Login = () => {
       localStorage.setItem("user", JSON.stringify(user));
       toast.success("Login bem-sucedido!");
       setLoading(false);
-      navigate("/");
+      navigate("/home");
       setFormData({ email: "", password: "" });
     } catch (err) {
       console.error("Erro ao fazer login:", err);

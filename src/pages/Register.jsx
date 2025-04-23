@@ -54,7 +54,7 @@ const Register = () => {
         channelName: "",
       });
       console.log(response);
-      navigate("/login");
+      navigate("/");
     } catch (err) {
       console.error("Erro ao criar usuário:", err);
       setError("Erro ao criar usuário");
