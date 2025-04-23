@@ -37,7 +37,7 @@ const ForgotPassword = () => {
 
     try {
       await axios.post(
-        `http://localhost:3000/users/reset-password/${token}`,
+        `https://collab-vid-back.onrender.com/users/reset-password/${token}`,
         formData
       );
       toast.success("Senha redefinida com sucesso!");

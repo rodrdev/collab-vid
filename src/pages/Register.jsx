@@ -40,7 +40,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/users/register",
+        "https://collab-vid-back.onrender.com/users/register",
         formData
       );
       toast.success("Usuário criado com sucesso!");

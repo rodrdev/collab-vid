@@ -13,9 +13,9 @@ function Home() {
     const fetchVideos = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/videos/${idClinet.id}`
+          `https://collab-vid-back.onrender.com/videos/${idClinet.id}`
         );
-        setVideos(response.data); // Supondo que o formato de resposta seja um array de vídeos
+        setVideos(response.data);
         setIsLoading(false);
       } catch (error) {
         console.error("Erro ao buscar vídeos:", error);

@@ -20,11 +20,14 @@ const EditUser = () => {
   const handleInfoSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/users/edit/${user.id}`, {
-        name,
-        email,
-        isInfluencer,
-      });
+      await axios.put(
+        `https://collab-vid-back.onrender.com/users/edit/${user.id}`,
+        {
+          name,
+          email,
+          isInfluencer,
+        }
+      );
       toast.success("Informações atualizadas com sucesso!");
     } catch (err) {
       toast.error(err.response?.data?.error || "Erro ao atualizar informações");
@@ -39,10 +42,13 @@ const EditUser = () => {
     }
 
     try {
-      await axios.put(`http://localhost:3000/users/edit-password/${user.id}`, {
-        currentPassword,
-        newPassword,
-      });
+      await axios.put(
+        `https://collab-vid-back.onrender.com/users/edit-password/${user.id}`,
+        {
+          currentPassword,
+          newPassword,
+        }
+      );
       toast.success("Senha alterada com sucesso!");
     } catch (err) {
       toast.error(err.response?.data?.error || "Erro ao atualizar senha");

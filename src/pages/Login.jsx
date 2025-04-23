@@ -25,7 +25,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/users/login",
+        "https://collab-vid-back.onrender.com/login",
         formData
       );
       const { token, user } = response.data;
@@ -51,9 +51,12 @@ const Login = () => {
       return;
     }
     try {
-      await axios.post("http://localhost:3000/users/forgot-password", {
-        email: formData.email,
-      });
+      await axios.post(
+        "https://collab-vid-back.onrender.com/users/forgot-password",
+        {
+          email: formData.email,
+        }
+      );
       toast.success(
         "Se um e-mail estiver cadastrado, você receberá um link para redefinição de senha."
       );

@@ -29,13 +29,16 @@ const Influencer = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:3000/videos", {
-        title: formData.title,
-        url: formData.link,
-        description: formData.observation,
-        influencerId: id,
-        senderName: formData.name,
-      });
+      const response = await axios.post(
+        "https://collab-vid-back.onrender.com/videos",
+        {
+          title: formData.title,
+          url: formData.link,
+          description: formData.observation,
+          influencerId: id,
+          senderName: formData.name,
+        }
+      );
 
       console.log("Video enviado com sucesso", response.data);
       toast.success("Formulário enviado com sucesso!");
