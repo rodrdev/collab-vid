@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,8 +8,6 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "",
-    confirmPassword: "",
     isInfluencer: false,
     channelName: "",
   });
@@ -17,7 +15,8 @@ const Register = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const passwordsMatch = formData.password === formData.confirmPassword;
+  const passwordRef = useRef(null);
+  const confirmPasswordRef = useRef(null);
 
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
@@ -32,28 +31,30 @@ const Register = () => {
     setError("");
     setLoading(true);
 
-    if (!passwordsMatch) {
+    const password = passwordRef.current.value;
+    const confirmPassword = confirmPasswordRef.current.value;
+
+    if (password !== confirmPassword) {
       setError("As senhas não coincidem.");
       setLoading(false);
       return;
     }
 
     try {
-      const response = await axios.post(
-        "https://collab-vid-back.onrender.com/users/register",
-        formData
-      );
+      await axios.post("https://collab-vid-back.onrender.com/users/register", {
+        ...formData,
+        password,
+      });
       toast.success("Usuário criado com sucesso!");
       setLoading(false);
       setFormData({
         name: "",
         email: "",
-        password: "",
-        confirmPassword: "",
         isInfluencer: false,
         channelName: "",
       });
-      console.log(response);
+      passwordRef.current.value = "";
+      confirmPasswordRef.current.value = "";
       navigate("/");
     } catch (err) {
       console.error("Erro ao criar usuário:", err);
@@ -122,15 +123,10 @@ const Register = () => {
               </label>
               <input
                 type="password"
-                className={`form-control ${
-                  !passwordsMatch && formData.confirmPassword
-                    ? "border-danger"
-                    : ""
-                }`}
+                className="form-control"
                 id="password"
-                value={formData.password}
-                onChange={handleChange}
                 placeholder="Senha"
+                ref={passwordRef}
                 required
               />
             </div>
@@ -140,15 +136,10 @@ const Register = () => {
               </label>
               <input
                 type="password"
-                className={`form-control ${
-                  !passwordsMatch && formData.confirmPassword
-                    ? "border-danger"
-                    : ""
-                }`}
+                className="form-control"
                 id="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
                 placeholder="Confirme a senha"
+                ref={confirmPasswordRef}
                 required
               />
             </div>
@@ -168,7 +159,7 @@ const Register = () => {
             <button
               type="submit"
               className="btn btn-primary w-100"
-              disabled={loading || !passwordsMatch}
+              disabled={loading}
             >
               {loading ? "Cadastrando..." : "Criar Conta"}
             </button>

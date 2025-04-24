@@ -1,32 +1,28 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({
-      ...formData,
-      [id]: value,
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
     try {
       const response = await axios.post(
         "https://collab-vid-back.onrender.com/users/login",
-        formData
+        { email, password }
       );
       const { token, user } = response.data;
 
@@ -34,8 +30,9 @@ const Login = () => {
       localStorage.setItem("user", JSON.stringify(user));
       toast.success("Login bem-sucedido!");
       setLoading(false);
+      emailRef.current.value = "";
+      passwordRef.current.value = "";
       navigate("/home");
-      setFormData({ email: "", password: "" });
     } catch (err) {
       console.error("Erro ao fazer login:", err);
       setError("Erro ao fazer login");
@@ -44,18 +41,19 @@ const Login = () => {
   };
 
   const handleForgotPassword = async () => {
-    if (!formData.email) {
+    const email = emailRef.current.value;
+
+    if (!email) {
       toast.error(
         "Por favor, preencha o campo de e-mail antes de redefinir a senha."
       );
       return;
     }
+
     try {
       await axios.post(
         "https://collab-vid-back.onrender.com/users/forgot-password",
-        {
-          email: formData.email,
-        }
+        { email }
       );
       toast.success(
         "Se um e-mail estiver cadastrado, você receberá um link para redefinição de senha."
@@ -86,8 +84,7 @@ const Login = () => {
                 type="email"
                 className="form-control"
                 id="email"
-                value={formData.email}
-                onChange={handleChange}
+                ref={emailRef}
                 placeholder="Email"
                 required
               />
@@ -100,8 +97,7 @@ const Login = () => {
                 type="password"
                 className="form-control"
                 id="password"
-                value={formData.password}
-                onChange={handleChange}
+                ref={passwordRef}
                 placeholder="Senha"
                 required
               />
