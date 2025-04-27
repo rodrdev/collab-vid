@@ -40,6 +40,14 @@ const Register = () => {
       return;
     }
 
+    // Validação de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError("Por favor, insira um email válido.");
+      setLoading(false);
+      return;
+    }
+
     try {
       await axios.post("https://collab-vid-back.onrender.com/users/register", {
         ...formData,

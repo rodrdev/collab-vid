@@ -82,6 +82,7 @@ const EditUser = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Digite seu email"
                 className="form-control"
+                readOnly
               />
             </div>
             <div className="form-check mb-3">
