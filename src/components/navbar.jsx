@@ -35,7 +35,7 @@ const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light border border-gray-500">
       <div className="container-fluid">
-        <img src="../../public/logo.png" width="180" />
+        <img src="/logo.png" width="180" />
         <div className="d-flex gap-2">
           <button className="btn btn-primary" onClick={handleGoToHome}>
             Home
