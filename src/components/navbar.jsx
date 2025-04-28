@@ -8,7 +8,7 @@ const NavBar = () => {
 
   const handleGenerateLink = () => {
     const currentUrl = window.location.origin;
-    const generatedLink = `${currentUrl}/${storedData.id}/${storedData.channelName}`;
+    const generatedLink = `${currentUrl}/#/${storedData.id}/${storedData.channelName}`;
     navigator.clipboard
       .writeText(generatedLink)
       .then(() => {
