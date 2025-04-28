@@ -21,7 +21,7 @@ const EditUser = () => {
       setChannelName(user.channelName || "");
       setIsInfluencer(user.isInfluencer || true);
     }
-  }, [user]);
+  }, []);
 
   const handleInfoSubmit = async (e) => {
     e.preventDefault();
