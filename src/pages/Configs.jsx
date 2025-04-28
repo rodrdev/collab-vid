@@ -7,6 +7,7 @@ import NavBar from "../components/navbar";
 const EditUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [channelName, setChannelName] = useState(""); // novo campo
   const [isInfluencer, setIsInfluencer] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -14,7 +15,12 @@ const EditUser = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    setName(user.name);
+    if (user) {
+      setName(user.name || "");
+      setEmail(user.email || "");
+      setChannelName(user.channelName || "");
+      setIsInfluencer(user.isInfluencer || true);
+    }
   }, [user]);
 
   const handleInfoSubmit = async (e) => {
@@ -25,6 +31,7 @@ const EditUser = () => {
         {
           name,
           email,
+          channelName,
           isInfluencer,
         }
       );
@@ -65,6 +72,18 @@ const EditUser = () => {
           <h3 className="h5">Informações Pessoais</h3>
           <form onSubmit={handleInfoSubmit}>
             <div className="mb-3">
+              <label className="form-label">Email:</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Digite seu email"
+                className="form-control"
+                readOnly
+                disabled
+              />
+            </div>
+            <div className="mb-3">
               <label className="form-label">Nome:</label>
               <input
                 type="text"
@@ -75,24 +94,14 @@ const EditUser = () => {
               />
             </div>
             <div className="mb-3">
-              <label className="form-label">Email:</label>
+              <label className="form-label">Nome do Canal:</label>{" "}
               <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Digite seu email"
+                type="text"
+                value={channelName}
+                onChange={(e) => setChannelName(e.target.value)}
+                placeholder="Digite o nome do seu canal"
                 className="form-control"
-                readOnly
               />
-            </div>
-            <div className="form-check mb-3">
-              <input
-                type="checkbox"
-                checked={isInfluencer}
-                onChange={() => setIsInfluencer(!isInfluencer)}
-                className="form-check-input"
-              />
-              <label className="form-check-label">Sou Influenciador</label>
             </div>
             <button type="submit" className="btn btn-primary w-100">
               Salvar Alterações
