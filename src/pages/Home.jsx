@@ -59,10 +59,22 @@ function Home() {
       url
     );
 
-  const convertToEmbedUrl = (url) =>
-    `https://www.youtube.com/embed/${new URLSearchParams(
-      new URL(url).search
-    ).get("v")}`;
+  const convertToEmbedUrl = (url) => {
+    const parsedUrl = new URL(url);
+
+    let videoId = null;
+
+    if (parsedUrl.searchParams.has("v")) {
+      videoId = parsedUrl.searchParams.get("v");
+    } else {
+      const match = parsedUrl.pathname.match(/\/shorts\/([a-zA-Z0-9_-]+)/);
+      if (match) {
+        videoId = match[1];
+      }
+    }
+
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+  };
 
   const getImageFromUrl = (url, video) => {
     if (isYouTubeVideo(url)) return convertToEmbedUrl(url);

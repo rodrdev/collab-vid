@@ -18,7 +18,7 @@ const VideoCard = ({ video, isYouTubeVideo, convertToEmbedUrl }) => {
             ></iframe>
           ) : (
             <img
-              src="../../public/news.svg"
+              src="/news.svg"
               alt="Imagem da matéria"
               className="card-img-top rounded-top"
               width="100%"
