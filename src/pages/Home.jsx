@@ -12,13 +12,21 @@ function Home() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
+        const token = localStorage.getItem("token");
+
         const response = await axios.get(
-          `https://collab-vid-back.onrender.com/videos/${idClinet.id}`
+          `https://collab-vid-back.onrender.com/videos/${idClinet.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
+
         setVideos(response.data);
-        setIsLoading(false);
       } catch (error) {
         console.error("Erro ao buscar vídeos:", error);
+      } finally {
         setIsLoading(false);
       }
     };

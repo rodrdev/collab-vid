@@ -13,7 +13,7 @@ const EditUser = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
-
+  const token = localStorage.getItem("token");
   useEffect(() => {
     if (user) {
       setName(user.name || "");
@@ -25,6 +25,7 @@ const EditUser = () => {
 
   const handleInfoSubmit = async (e) => {
     e.preventDefault();
+
     try {
       await axios.put(
         `https://collab-vid-back.onrender.com/users/edit/${user.id}`,
@@ -33,8 +34,14 @@ const EditUser = () => {
           email,
           channelName,
           isInfluencer,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
+
       toast.success("Informações atualizadas com sucesso!");
     } catch (err) {
       toast.error(err.response?.data?.error || "Erro ao atualizar informações");
@@ -43,6 +50,7 @@ const EditUser = () => {
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
+
     if (newPassword !== confirmNewPassword) {
       toast.error("As senhas não coincidem");
       return;
@@ -54,8 +62,14 @@ const EditUser = () => {
         {
           currentPassword,
           newPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
+
       toast.success("Senha alterada com sucesso!");
     } catch (err) {
       toast.error(err.response?.data?.error || "Erro ao atualizar senha");
